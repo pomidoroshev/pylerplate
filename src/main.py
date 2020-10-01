@@ -1,4 +1,9 @@
-def run():
+"""
+The main test module
+"""
+
+
+def run() -> str:
     """
     Run program.
     """

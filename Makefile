@@ -1,12 +1,13 @@
 export PYTHONPATH=src
 
-RUN=pipenv run
+RUN=poetry run
 
 default: run
 
 .PHONY: init
 init:
-	pipenv install --dev
+	poetry install -E devtools --no-root
+	$(RUN) pre-commit install
 	$(RUN) pre-commit install-hooks
 	$(RUN) make format check test
 
@@ -17,10 +18,6 @@ clean:
 .PHONY: run
 run:
 	$(RUN) python src/main.py
-
-.PHONY: shell
-shell:
-	pipenv shell
 
 .PHONY: test
 test:
@@ -34,9 +31,20 @@ cov:
 cov-html:
 	$(RUN) pytest --cov --cov-report=html
 
-.PHONY: check
-check:
+.PHONY: flake8
+flake8:
 	$(RUN) flake8
+
+.PHONY: pylint
+pylint:
+	$(RUN) pylint src
+
+.PHONY: mypy
+mypy:
+	$(RUN) mypy src
+
+.PHONY: check
+check: pylint flake8 mypy
 
 .PHONY: format
 format:

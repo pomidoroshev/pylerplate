@@ -1,10 +1,10 @@
 exclude: '^$'
 fail_fast: false
 default_language_version:
-  python: python3.7
+  python: python3.8
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.5.0
+    rev: v3.2.0
     hooks:
       - id: trailing-whitespace
 
@@ -12,20 +12,12 @@ repos:
     rev: v1.3
     hooks:
       - id: autoflake
-        args: ['-r', '--in-place',
-               '--remove-all-unused-imports', '--ignore-init-module-imports']
-
-  - repo: https://github.com/asottile/seed-isort-config
-    rev: v2.1.0
-    hooks:
-      - id: seed-isort-config
-        args: ['--application-directories=src']
+        args: ['-r', '--in-place', '--remove-all-unused-imports']
 
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v4.3.21
+    rev: v5.5.4
     hooks:
       - id: isort
-        args: ['-y']
 
   - repo: https://github.com/ambv/black
     rev: stable
