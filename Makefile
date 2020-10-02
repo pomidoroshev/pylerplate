@@ -35,16 +35,12 @@ cov-html:
 flake8:
 	$(RUN) flake8
 
-.PHONY: pylint
-pylint:
-	$(RUN) pylint src
-
 .PHONY: mypy
 mypy:
 	$(RUN) mypy src
 
 .PHONY: check
-check: pylint flake8 mypy
+check: flake8 mypy
 
 .PHONY: format
 format:
