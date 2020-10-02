@@ -22,6 +22,12 @@ isort = {version = "^5.5.4", optional = true}
 ptipython = {version = "^1.0.1", optional = true}
 pre-commit = {version = "^2.7.1", optional = true}
 autoflake = {version = "^1.4", optional = true}
+fastapi = "^0.61.1"
+uvicorn = "^0.12.1"
+orjson = "^3.4.0"
+requests = "^2.24.0"
+fastapi-utils = "^0.2.1"
+sentry-sdk = "^0.18.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.1"

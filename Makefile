@@ -1,4 +1,4 @@
-export PYTHONPATH=src
+export PYTHONPATH=.
 
 BINDIR=$(VIRTUAL_ENV)/bin
 
@@ -17,7 +17,11 @@ clean:
 
 .PHONY: run
 run:
-	$(BINDIR)/python src/main.py
+	$(BINDIR)/uvicorn api:app
+
+.PHONY: dev
+dev:
+	$(BINDIR)/uvicorn api:app --reload
 
 .PHONY: test
 test:
@@ -37,7 +41,7 @@ flake8:
 
 .PHONY: mypy
 mypy:
-	$(BINDIR)/mypy src
+	$(BINDIR)/mypy api
 
 .PHONY: check
 check: flake8 mypy
