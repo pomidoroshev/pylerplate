@@ -52,7 +52,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pylint]
     [tool.pylint.'VARIABLES']
-        allow-global-unused-variables=['no']
+        allow-global-unused-variables = false
 
     [tool.pylint.'FORMAT']
         indent-after-paren=4
@@ -61,4 +61,4 @@ build-backend = "poetry.core.masonry.api"
         max-module-lines=300
 
     [tool.pylint.'MESSAGES CONTROL']
-        disable=['C0103']
+        disable=['C0103', 'R0903']
