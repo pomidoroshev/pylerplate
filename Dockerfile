@@ -1,14 +1,9 @@
 FROM python:3.9-alpine
 
-RUN apk add --no-cache \
-    gcc \
-    musl-dev \
-    libffi-dev \
-    openssl-dev
+RUN apk add --no-cache make
 
-RUN pip install poetry
-RUN mkdir /app
-RUN python -m venv "/venv"
 ENV VIRTUAL_ENV "/venv"
+ENV PATH "$VIRTUAL_ENV/bin:${PATH}"
 
 WORKDIR /app
+ENV PYTHONPATH "."
