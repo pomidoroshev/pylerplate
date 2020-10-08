@@ -9,26 +9,38 @@ env:
   IMAGE_NAME: pylerplate
 
 jobs:
-  push:
+  base-compile:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build compile image
-        run: docker build . --file Dockerfile.compile --tag $IMAGE_NAME:compile
-
-      - name: Build runtime image
-        run: docker build . --file Dockerfile.runtime --tag $IMAGE_NAME:runtime
+      - name: Build image
+        run: docker build . --file Dockerfile.compile --tag $IMAGE_NAME:base-compile
 
       - name: Log into GitHub Container Registry
         run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Push images to GitHub Container Registry
+      - name: Push image to GitHub Container Registry
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-          docker tag $IMAGE_NAME:compile $IMAGE_ID:compile
-          docker push $IMAGE_ID:compile
-          docker tag $IMAGE_NAME:runtime $IMAGE_ID:runtime
-          docker push $IMAGE_ID:runtime
+          docker tag $IMAGE_NAME:base-compile $IMAGE_ID:base-compile
+          docker push $IMAGE_ID:base-compile
+
+  base-runtime:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build . --file Dockerfile.runtime --tag $IMAGE_NAME:base-runtime
+
+      - name: Log into GitHub Container Registry
+        run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push image to GitHub Container Registry
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          docker tag $IMAGE_NAME:base-runtime $IMAGE_ID:base-runtime
+          docker push $IMAGE_ID:base-runtime
