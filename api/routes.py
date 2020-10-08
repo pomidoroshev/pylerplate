@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from fastapi.responses import ORJSONResponse
 from fastapi_utils.inferring_router import InferringRouter
 
 from .typehints import Routes
@@ -16,7 +15,5 @@ routes: Routes = [
 def add_routes(app: FastAPI) -> None:
     router = InferringRouter()
     for url, handler, methods in routes:
-        router.add_api_route(
-            url, handler, methods=methods, response_class=ORJSONResponse
-        )
+        router.add_api_route(url, handler, methods=methods)
     app.include_router(router)
