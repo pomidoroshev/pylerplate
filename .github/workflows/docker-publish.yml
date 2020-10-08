@@ -3,7 +3,7 @@ name: Docker
 on:
   push:
     branches:
-      - base
+      - base-*
 
 env:
   IMAGE_NAME: pylerplate
