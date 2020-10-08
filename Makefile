@@ -1,15 +1,15 @@
 export PYTHONPATH=src
 
-RUN=poetry run
+BINDIR=$(VIRTUAL_ENV)/bin
 
 default: run
 
 .PHONY: init
 init:
 	poetry install -E devtools --no-root
-	$(RUN) pre-commit install
-	$(RUN) pre-commit install-hooks
-	$(RUN) make format check test
+	$(BINDIR)/pre-commit install
+	$(BINDIR)/pre-commit install-hooks
+	make format check test
 
 .PHONY: clean
 clean:
@@ -17,31 +17,31 @@ clean:
 
 .PHONY: run
 run:
-	$(RUN) python src/main.py
+	$(BINDIR)/python src/main.py
 
 .PHONY: test
 test:
-	$(RUN) pytest
+	$(BINDIR)/pytest
 
 .PHONY: cov
 cov:
-	$(RUN) pytest --cov
+	$(BINDIR)/pytest --cov
 
 .PHONY: cov-html
 cov-html:
-	$(RUN) pytest --cov --cov-report=html
+	$(BINDIR)/pytest --cov --cov-report=html
 
 .PHONY: flake8
 flake8:
-	$(RUN) flake8
+	$(BINDIR)/flake8
 
 .PHONY: mypy
 mypy:
-	$(RUN) mypy src
+	$(BINDIR)/mypy src
 
 .PHONY: check
 check: flake8 mypy
 
 .PHONY: format
 format:
-	$(RUN) pre-commit run -a
+	$(BINDIR)/pre-commit run -a
