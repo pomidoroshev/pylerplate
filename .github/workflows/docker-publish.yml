@@ -3,7 +3,7 @@ name: Docker
 on:
   push:
     branches:
-      - base-*
+      - base
 
 env:
   IMAGE_NAME: pylerplate
@@ -14,13 +14,16 @@ jobs:
     if: github.event_name == 'push'
     strategy:
         matrix:
+          image:
+            - compile
+            - runtime
           python:
             - 3.9
     steps:
       - uses: actions/checkout@v2
 
       - name: Build image
-        run: docker build . --build-arg PYTHON_VERSION=${{ matrix.python }} --file Dockerfile --tag $IMAGE_NAME
+        run: docker build . --build-arg PYTHON_VERSION=${{ matrix.python }} --file Dockerfile.${{ matrix.image }} --tag $IMAGE_NAME
 
       - name: Log into GitHub Container Registry
         run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
@@ -28,18 +31,7 @@ jobs:
       - name: Push image to GitHub Container Registry
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          VERSION="${{ github.ref }}-${{ matrix.image}}-${{ matrix.python }}"
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
