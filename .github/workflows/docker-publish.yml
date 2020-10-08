@@ -33,7 +33,7 @@ jobs:
       - name: Push image to GitHub Container Registry
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-          VERSION="${{ github.ref }}-${{ matrix.image}}-${{ matrix.python }}"
+          VERSION="$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')-${{ matrix.image}}-${{ matrix.python }}"
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
