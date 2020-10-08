@@ -20,7 +20,6 @@ jobs:
           python:
             - 3.8
             - 3.9
-            - 3.10.0a1
     steps:
       - uses: actions/checkout@v2
 
