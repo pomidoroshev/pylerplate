@@ -17,11 +17,11 @@ clean:
 
 .PHONY: run
 run:
-	$(BINDIR)/uvicorn api:app
+	$(BINDIR)/uvicorn app:app
 
 .PHONY: dev
 dev:
-	$(BINDIR)/uvicorn api:app --reload
+	$(BINDIR)/uvicorn app:app --reload
 
 .PHONY: test
 test:
@@ -41,7 +41,7 @@ flake8:
 
 .PHONY: mypy
 mypy:
-	$(BINDIR)/mypy api
+	$(BINDIR)/mypy app
 
 .PHONY: check
 check: flake8 mypy
