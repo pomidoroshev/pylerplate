@@ -1,5 +1,3 @@
-export PYTHONPATH=.
-
 BINDIR=$(VIRTUAL_ENV)/bin
 
 default: run
