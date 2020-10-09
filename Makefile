@@ -1,4 +1,4 @@
-export PYTHONPATH=src
+export PYTHONPATH=.
 
 BINDIR=$(VIRTUAL_ENV)/bin
 
@@ -17,7 +17,7 @@ clean:
 
 .PHONY: run
 run:
-	$(BINDIR)/python src/main.py
+	$(BINDIR)/python app/main.py
 
 .PHONY: test
 test:
@@ -37,7 +37,7 @@ flake8:
 
 .PHONY: mypy
 mypy:
-	$(BINDIR)/mypy src
+	$(BINDIR)/mypy app
 
 .PHONY: check
 check: flake8 mypy
