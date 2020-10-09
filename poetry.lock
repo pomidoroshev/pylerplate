@@ -985,8 +985,8 @@ devtools = ["isort", "autoflake", "pre-commit", "ptipython"]
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.8"
-content-hash = "b2dd15d1f69029a4084145dde3c8b3b60e81abdefa3b4c9bcc52adfa8825aaf8"
+python-versions = "^3.9"
+content-hash = "de91b41cee1b2a644679f72efe147e787a40ddfb2302133e2dde70edf11105d7"
 
 [metadata.files]
 appdirs = [
